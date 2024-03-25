@@ -1,5 +1,6 @@
 module.exports = {
     tradeSchema: require("./trades"),
     portfolioSchema: require("./portfolio"),
-    stockSchema: require("./stocks")
+    stockSchema: require("./stocks"),
+    returnSchema: require("./returns")
 }
