@@ -17,7 +17,7 @@ exports.addTrade = async (tradeData) => {
     let portfolio;
     if (type === config.ENUM.TRADE_ACTION.BUY && tradePortfolio) {
       tradePortfolio.quantity += quantity;
-      tradePortfolio.buyedPrice = (tradePortfolio.buyedPrice + (price * quantity)) / tradePortfolio.quantity + quantity;
+      tradePortfolio.buyedPrice = (tradePortfolio.buyedPrice + (price * quantity)) / tradePortfolio.quantity + quantity; //average caluation of price
       portfolio = await portfolioServices. updatePortFolio(tradePortfolio);
     } else if (type === config.ENUM.TRADE_ACTION.BUY && !tradePortfolio) {
       portfolio = await portfolioServices.addPortfolio(tradeData);
@@ -62,7 +62,7 @@ exports.updateTrade = async (tradeId, tradeData) => {
     let portfolio;
     if (trade.type === config.ENUM.TRADE_ACTION.BUY && tradePortfolio) {
       tradePortfolio.quantity += quantity;
-      tradePortfolio.buyedPrice = (tradePortfolio.buyedPrice + (price * quantity)) / tradePortfolio.quantity + quantity;
+      tradePortfolio.buyedPrice = (tradePortfolio.buyedPrice + (price * quantity)) / tradePortfolio.quantity + quantity; //average caluation of price
       portfolio = await portfolioServices.updatePortFolio(tradePortfolio);
     } else if (trade.type === config.ENUM.TRADE_ACTION.BUY && !tradePortfolio) {
       portfolio = await portfolioServices.addPortfolio(tradeData);
