@@ -12,12 +12,7 @@ exports.addTrade = async (tradeData) => {
       price,
       type,
     } = tradeData;
-    const query = {
-      dematAccNo: 'ABC',
-      symbol,
-    };
-    const portfolioModel = new portfolioSchema();
-    const tradePortfolio = await portfolioModel.collection.findOne(query, {}, { lean: true });
+    const tradePortfolio = await portfolioServices.getportfolioBySymbol('ABC', symbol);
     console.log('🚀 ~ tradePortfolio:', tradePortfolio);
     let portfolio;
     if (type === config.ENUM.TRADE_ACTION.BUY && tradePortfolio) {
@@ -55,10 +50,6 @@ exports.updateTrade = async (tradeId, tradeData) => {
       quantity,
       price
     } = tradeData;
-    const query = {
-      dematAccNo: 'ABC',
-      symbol,
-    };
     const tradeQuery = {
       _id: new mongoose.Types.ObjectId(tradeId),
     };
@@ -66,8 +57,7 @@ exports.updateTrade = async (tradeId, tradeData) => {
     const trade = await tradeModel.collection.findOne(tradeQuery, { lean: true });
     console.log("🚀 ~ exports.updateTrade= ~ trade:", trade)
     if(!trade) throw "Trade Do not Exist!";
-    const portfolioModel = new portfolioSchema();
-    const tradePortfolio = await portfolioModel.collection.findOne(query, { lean: true });
+    const tradePortfolio = await portfolioServices.getportfolioBySymbol('ABC', symbol);
     console.log('🚀 ~ tradePortfolio:', tradePortfolio);
     let portfolio;
     if (trade.type === config.ENUM.TRADE_ACTION.BUY && tradePortfolio) {
@@ -108,17 +98,7 @@ exports.removeTrade = async (tradeId) => {
       if (portfolio.quantity - trade.quantity <= 0) {
         await portfolioServices.removeSymbolPortfolio(trade.dematAccNo, trade.symbol);
       } else {
-        const query = {
-          dematAccNo: trade.dematAccNo,
-          symbol: trade.symbol,
-        };
-        const update = {
-          $inc: {
-            quantity: -trade.quantity,
-          },
-        };
-        const portfolioModel = new portfolioSchema();
-        const portfolio = await portfolioModel.collection.findOneAndUpdate(query, update, { lean: true, new: true });
+        const portfolio = await portfolioServices.updatePortFolio(trade);
         console.log('🚀 ~ getportfolioBySymbol ~ portfolio:', portfolio);
       }
     }
