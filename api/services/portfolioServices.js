@@ -136,10 +136,13 @@ exports.updatePortFolio = async (portfoilioData) => {
         symbol: portfoilioData.symbol
     };
     const update = {
-        $set: {
-            quantity: portfoilioData.quantity,
-            buyedPrice: portfoilioData.buyedPrice
-        }
+        $set: {}
+    }
+    if (portfoilioData.quantity) {
+        update['$set']['quantity'] = portfoilioData.quantity;
+    }
+    if (portfoilioData.buyedPrice) {
+        update['$set']['buyedPrice'] = portfoilioData.quantity;
     }
     const portfolioModel = new portfolioSchema();
     const portfolio = await portfolioModel.collection.findOneAndUpdate(query, update, { lean: true, new: true });
