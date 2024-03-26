@@ -4,6 +4,7 @@ const portfolioServices = require('./portfolioServices');
 const mongoose = require('mongoose');
 
 exports.getTrades = async (dematAccNo, symbol) => {
+  console.log("🚀 ~ exports.getTrades= ~ dematAccNo, symbol:", dematAccNo, symbol)
   const query = {
       dematAccNo: dematAccNo,
       symbol: symbol
