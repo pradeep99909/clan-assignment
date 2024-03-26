@@ -1,5 +1,5 @@
 const { tradeSchema, portfolioSchema } = require("../../models");
-const services = require("../services");
+const tradeServices = require("./tradeServices");
 const config = require("../../config");
 
 exports.portfolio = async (dematAccNo) => {
@@ -55,7 +55,7 @@ exports.returns = async (dematAccNo) => {
         let totalSellAmount = 0;
         for (stock of portfolioStocks) {
             console.log("🚀 ~ exports.returns= ~ stock:", stock)
-            const trades = await services.tradeServices.getTrades(dematAccNo, stock.symbol);
+            const trades = await tradeServices.getTrades(dematAccNo, stock.symbol);
             console.log("🚀 ~ exports.returns= ~ trades:", trades)
             for (trade of trades) {
                 console.log("🚀 ~ cumulativeReturns ~ trade:", trade)
@@ -69,7 +69,7 @@ exports.returns = async (dematAccNo) => {
         let cumulativeReturn = totalSellAmount - totalBuyAmount;
         console.log("🚀 ~ cumulativeReturns ~ cumulativeReturn:", cumulativeReturn)
         if (cumulativeReturn < 0 && totalSellAmount === 0) {
-            cumulativeReturn = Math.abs(cumulativeReturn);
+            cumulativeReturn = 0;
         }
         let returnPercentage = (cumulativeReturn / totalBuyAmount) * 100;
         console.log("🚀 ~ cumulativeReturns ~ returnPercentage:", returnPercentage)
