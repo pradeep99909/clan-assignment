@@ -1,6 +1,4 @@
-const {
-    services
-} = require("../services");
+const services = require("../services");
 
 exports.portfolio = async (req, res) => {
     try {

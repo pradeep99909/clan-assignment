@@ -1,6 +1,4 @@
-const {
-    services
-} = require("../services");
+const services = require("../services");
 
 exports.addTrade = async (req, res) => {
     try {
