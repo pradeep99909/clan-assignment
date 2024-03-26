@@ -9,3 +9,12 @@ const stockSchema = new Schema({
 });
 
 module.exports = mongoose.model("stocks", stockSchema);
+
+/*
+    Model explaination
+
+    name: name of share eg. RELAINCE,
+    volume: amount of perticalar share people holding,
+    price: curent price of the share
+
+*/
