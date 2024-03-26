@@ -10,3 +10,15 @@ const tradeSchema = new Schema({
 });
 
 module.exports = mongoose.model("trades", tradeSchema);
+
+/*
+    Model explaination
+
+    time: time when it was traded,
+    currentPrice: price buyed at,
+    quantity: quantity buyed selled at the time,
+    dematAccNo: demat account number,
+    type: buye of selling trade,
+    symbol: ticker symbol of the share
+
+*/
