@@ -1,4 +1,5 @@
 const { tradeSchema, portfolioSchema } = require("../../models");
+const services = require("../services");
 const config = require("../../config");
 
 exports.portfolio = async (dematAccNo) => {
@@ -54,13 +55,7 @@ exports.returns = async (dematAccNo) => {
         let totalSellAmount = 0;
         for (stock of portfolioStocks) {
             console.log("🚀 ~ exports.returns= ~ stock:", stock)
-            const query = {
-                dematAccNo: dematAccNo,
-                symbol: stock.symbol
-            }
-            console.log("🚀 ~ exports.returns= ~ query:", query)
-            const tradeModel = new tradeSchema();
-            const trades = await tradeModel.collection.find(query, {}, { lean: true }).toArray();
+            const trades = await services.tradeServices.getTrades(dematAccNo, stock.symbol);
             console.log("🚀 ~ exports.returns= ~ trades:", trades)
             for (trade of trades) {
                 console.log("🚀 ~ cumulativeReturns ~ trade:", trade)

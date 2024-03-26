@@ -1,7 +1,17 @@
-const { tradeSchema, portfolioSchema } = require('../../models');
+const { tradeSchema } = require('../../models');
 const config = require('../../config');
 const portfolioServices = require('./portfolioServices');
 const mongoose = require('mongoose');
+
+exports.getTrades = async (dematAccNo, symbol) => {
+  const query = {
+      dematAccNo: dematAccNo,
+      symbol: symbol
+  }
+  const tradeModel = new tradeSchema();
+  const trades = await tradeModel.collection.find(query, {}, { lean: true }).toArray();
+  return trades;
+}
 
 exports.addTrade = async (tradeData) => {
   try {
